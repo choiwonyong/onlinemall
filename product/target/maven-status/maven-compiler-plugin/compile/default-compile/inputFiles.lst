@@ -1,0 +1,12 @@
+C:\onlinemall\product\src\main\java\onlinemall\config\kafka\KafkaProcessor.java
+C:\onlinemall\product\src\main\java\onlinemall\AbstractEvent.java
+C:\onlinemall\product\src\main\java\onlinemall\OrderAccepted.java
+C:\onlinemall\product\src\main\java\onlinemall\Product.java
+C:\onlinemall\product\src\main\java\onlinemall\ProductRepository.java
+C:\onlinemall\product\src\main\java\onlinemall\PaymentApproved.java
+C:\onlinemall\product\src\main\java\onlinemall\ProductApplication.java
+C:\onlinemall\product\src\main\java\onlinemall\ProductCanceled.java
+C:\onlinemall\product\src\main\java\onlinemall\ProductRegistered.java
+C:\onlinemall\product\src\main\java\onlinemall\PolicyHandler.java
+C:\onlinemall\product\src\main\java\onlinemall\ProductController.java
+C:\onlinemall\product\src\main\java\onlinemall\PaymentCanceled.java

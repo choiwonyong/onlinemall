@@ -1,0 +1,5 @@
+package onlinemall;
+
+public class MongoConfig {
+
+}

@@ -1,0 +1,73 @@
+package onlinemall;
+
+import onlinemall.config.kafka.KafkaProcessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PolicyHandler{
+    @Autowired ProductRepository productRepository;
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPaymentApproved_OrderPrepare(@Payload PaymentApproved paymentApproved){
+
+        if(!paymentApproved.validate()) return;
+
+        System.out.println("\n\n##### listener OrderPrepare : " + paymentApproved.toJson() + "\n\n");
+
+        // Sample Logic //
+        Product product = new Product();
+        product.setOrderId(paymentApproved.getOrderId());
+        product.setProductId(paymentApproved.getProductId());
+        product.setStatus("OrderPrepare");
+        
+      /*  Optional<Product> productOptional = productRepository.findById(product.getProductId());
+        if( productOptional.isPresent()) {
+        	Product prod=productOptional.get();
+        	if(prod.getStock() >= paymentApproved.getQty()) {
+        		prod.setStock( prod.getStock() -paymentApproved.getQty());
+        	}
+        }*/
+       
+        
+        productRepository.save(product);
+            
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPaymentApproved_ModifyStock(@Payload PaymentApproved paymentApproved){
+
+        if(!paymentApproved.validate()) return;
+
+        System.out.println("\n\n##### listener ModifyStock : " + paymentApproved.toJson() + "\n\n");
+
+        // Sample Logic //
+        Product product = new Product();
+        productRepository.save(product);
+            
+    }
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPaymentCanceled_ModifyStock(@Payload PaymentCanceled paymentCanceled){
+
+        if(!paymentCanceled.validate()) return;
+
+        System.out.println("\n\n##### listener ModifyStock : " + paymentCanceled.toJson() + "\n\n");
+
+        // Sample Logic //
+        Product product = new Product();
+        productRepository.save(product);
+            
+    }
+
+
+    @StreamListener(KafkaProcessor.INPUT)
+    public void whatever(@Payload String eventString){}
+
+
+}
