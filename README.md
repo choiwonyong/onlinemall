@@ -301,6 +301,13 @@ public interface DeliveryRepository extends PagingAndSortingRepository<Delivery,
 }
 ```
 - 적용 후 REST API 의 테스트
+ - Kafka 기동(cd kafka_2.12-2.7.0\bin\windows) 
+  - zookeeper : zookeeper-server-start.bat ../../config/zookeeper.properties
+  - kafka : kafka-server-start.bat ../../config/server.properties --override delete.topic.enable=true
+  - kafka Message : kafka-console-consumer.bat --bootstrap-server http://localhost:9092 --topic onlinemall --from-beginning
+  - kafka 확인 : 
+    ![image](https://user-images.githubusercontent.com/80744275/121151306-332e3480-c87f-11eb-87ba-bf60be4796ff.png)
+
 ```
 # app 서비스의 주문처리
 http POST http://localhost:8081/orders productId=1000 productName=TV qty=1 status=ordered unitPrice=1000000 adderss=Seoul customerId=CHOI
