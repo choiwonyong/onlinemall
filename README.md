@@ -543,21 +543,25 @@ public class PolicyHandler{
 실제 구현을 하자면 시스템에서 알려 주고 상품 준비를 마친후, 주문 상태를 UI에 입력할테니, 우선 주문정보를 DB에 받아놓은 후, 이후 처리는 해당 Aggregate 내에서 하면 되겠다.:
   
 ```
-  @Autowired 주문관리Repository 주문관리Repository;
-  
-  @StreamListener(KafkaProcessor.INPUT)
-  public void whenever결제승인됨_주문정보받음(@Payload 결제승인됨 결제승인됨){
+  @Service
+  public class PolicyHandler{
+    @Autowired ProductRepository productRepository;
 
-      if(!paymentApproved.validate()) return;
+    @StreamListener(KafkaProcessor.INPUT)
+    public void wheneverPaymentApproved_OrderPrepare(@Payload PaymentApproved paymentApproved){
+
+        if(!paymentApproved.validate()) return;
 
         System.out.println("\n\n##### listener OrderPrepare : " + paymentApproved.toJson() + "\n\n");
 
         // Sample Logic //
+
         Product product = new Product();
+        
         product.setOrderId(paymentApproved.getOrderId());
         product.setProductId(paymentApproved.getProductId());
         product.setQty(paymentApproved.getQty());
-        product.setStatus("OrderPrepare");                
+        product.setStatus("OrderPrepare");                 
         productRepository.save(product);
             
     }
