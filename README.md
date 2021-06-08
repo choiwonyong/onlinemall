@@ -308,8 +308,8 @@ public interface DeliveryRepository extends PagingAndSortingRepository<Delivery,
   - kafka 확인 : 
     ![image](https://user-images.githubusercontent.com/80744275/121151306-332e3480-c87f-11eb-87ba-bf60be4796ff.png)
 
+- app서비스의 주문처리
 ```
-# app 서비스의 주문처리
 http POST http://localhost:8081/orders productId=1000 productName=TV qty=1 status=ordered unitPrice=1000000 adderss=Seoul customerId=CHOI
 
 ```
@@ -317,8 +317,8 @@ http POST http://localhost:8081/orders productId=1000 productName=TV qty=1 statu
 
 ![image](https://user-images.githubusercontent.com/80744275/121121512-a5405280-c85a-11eb-9087-5c8a0e6efcf8.png)
 
+- 상품 접수 완료 서비스 처리
 ```
-# 상품 접수 완료 서비스의 처리
 http POST http://localhost:8083/products orderId=1 productId=1000 qty=1 productName=TV status=OrderAccepted
 
 ```
@@ -326,8 +326,8 @@ http POST http://localhost:8083/products orderId=1 productId=1000 qty=1 productN
 
 ![image](https://user-images.githubusercontent.com/80744275/121121880-6d85da80-c85b-11eb-9247-45738bf69860.png)
 
+- 배달 출발 서비스 처리
 ```
-# 배달 출발 서비스의 처리
 http -f POST http://localhost:8084/deliveries/started orderId=1 status=DeliveryStarted customerId=CHOI address=Seoul
 
 ```
