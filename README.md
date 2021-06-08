@@ -113,11 +113,11 @@
   ![image](https://user-images.githubusercontent.com/487999/79684144-2a893200-826a-11ea-9a01-79927d3a0107.png)
 
 ## TO-BE 조직 (Vertically-Aligned)
-  ![image](https://user-images.githubusercontent.com/487999/79684159-3543c700-826a-11ea-8d5f-a3fc0c4cad87.png)
+  ![image](https://user-images.githubusercontent.com/80744275/121147146-9322dc00-c87b-11eb-9ce2-ee405f6081cf.png)
 
 
 ## Event Storming 결과
-* MSAEz 로 모델링한 이벤트스토밍 결과:  http://msaez.io/#/storming/nZJ2QhwVc4NlVJPbtTkZ8x9jclF2/every/a77281d704710b0c2e6a823b6e6d973a/-M5AV2z--su_i4BfQfeF
+* MSAEz 로 모델링한 이벤트스토밍 결과: http://www.msaez.io/#/storming/XyOvvgYhWFflODDKFLJZTLywC4E2/mine/739218fcb43a7278cd28719420cdd8c3
 
 
 ### 이벤트 도출
@@ -287,7 +287,8 @@ public class Delivery {
     }
 
 ```
-- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
+- Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다.
+
 ```
 package onlinemall;
 
@@ -381,7 +382,7 @@ package onlinemall;
 http POST http://localhost:8084/deliveries orderId=1 status=DeliveryStarted customerId=CHOI address=Seoul
 
 ```
-### MongDB Table 생성 및 저장 확인
+### MongoDB Table 생성 및 저장 확인
 
 ![image](https://user-images.githubusercontent.com/80744275/120778684-76c42e00-c561-11eb-9558-af2e93f46705.png)
 
@@ -513,7 +514,7 @@ public class Pay {
        }     
     }
 ```
-결제승인되었다는 도메인 이벤트 카프카로 송출한다.(Publish)
+- 결제승인되었다는 도메인 이벤트 카프카로 송출한다.(Publish)
 
 ![image](https://user-images.githubusercontent.com/80744275/121123508-4ed51300-c85e-11eb-869e-7284f366aecd.png)
 
@@ -540,7 +541,7 @@ public class PolicyHandler{
     }
 
 ```
-실제 구현을 하자면 시스템에서 알려 주고 상품 준비를 마친후, 주문 상태를 UI에 입력할테니, 우선 주문정보를 DB에 받아놓은 후, 이후 처리는 해당 Aggregate 내에서 하면 되겠다.:
+- 실제 구현을 하자면 시스템에서 알려 주고 상품 준비를 마친후, 주문 상태를 UI에 입력할테니, 우선 주문정보를 DB에 받아놓은 후, 이후 처리는 해당 Aggregate 내에서 하면 되겠다.:
   
 ```
   @Service
@@ -568,7 +569,7 @@ public class PolicyHandler{
 
 ```
 
-상품 시스템은 주문/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 상점시스템이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다.
+- 상품 시스템은 주문/결제와 완전히 분리되어있으며, 이벤트 수신에 따라 처리되기 때문에, 상점시스템이 유지보수로 인해 잠시 내려간 상태라도 주문을 받는데 문제가 없다.
 
 ```
 # 상품팀 서비스 (Product) 를 잠시 내려놓음 (ctrl+c)
