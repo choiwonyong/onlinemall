@@ -698,6 +698,15 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080
 
 ## CI/CD 설정
 
+- 코드 형상관리: https://github.com/choiwonyong/onlinemall 하위 repository에 각각 구성
+- 운영플랫폼: AWS의 EKS(Elastic Kubernetes Service)
+- Docker Image 저장소: AWS의 ECR(Elastic Container Registry)
+
+배포명령어(AWS)
+
+```
+kubectl expose deploy gateway --type=LoadBalancer --port=8080
+```
 
 각 구현체들은 각자의 source repository 에 구성되었고, 사용한 CI/CD 플랫폼은 GCP를 사용하였으며, pipeline build script 는 각 프로젝트 폴더 이하에 cloudbuild.yml 에 포함되었다.
 
