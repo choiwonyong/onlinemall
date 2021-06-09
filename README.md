@@ -966,17 +966,7 @@ spec:
             timeoutSeconds: 2
             periodSeconds: 5
             failureThreshold: 5
-          env:
-          - name: station_nm
-            valueFrom:
-              secretKeyRef:
-                name: app
-                key: stationName
-          - name: station_cd
-            valueFrom:
-              configMapKeyRef:
-                name: app
-                key: stationCode
+
 EOF
 
 ```
