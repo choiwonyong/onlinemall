@@ -674,7 +674,7 @@ http GET localhost:8081/myPages
 
 ## API Gateway
 API Gateway를 통하여 마이크로 서비스들 진입점을 하나로 한다.
-- gateway의 application.yml에 라이팅 경로 설정
+- gateway의 application.yml에 라우팅 경로 설정
 
 ![image](https://user-images.githubusercontent.com/80744275/121280997-29a1dc80-c912-11eb-98df-2209827f79b0.png)
 
