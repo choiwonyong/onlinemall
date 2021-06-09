@@ -1044,6 +1044,80 @@ Concurrency:		       96.02
 
 배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
 
+## Liveness
+pod의 container가 정상적으로 기동되는지 확인하여, 비정상 상태인 경우 pod를 재기동하도록 한다.
+
+아래의 값으로 liveness를 설정한다.
+
+재기동 제어값 : /tmp/healthy 파일의 존재를 확인
+기동 대기 시간 : 3초
+재기동 횟수 : 5번까지 재시도
+이때, 재기동 제어값인 /tmp/healthy파일을 강제로 지워 liveness가 pod를 비정상 상태라고 판단하도록 하였다.
+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app
+          image: 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-app:v1
+          args:
+          - /bin/sh
+          - -c
+          - touch /tmp/healthy; sleep 10; rm -rf /tmp/healthy; sleep 600;
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/healthy
+            initialDelaySeconds: 3
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+          env:
+          - name: station_nm
+            valueFrom:
+              secretKeyRef:
+                name: app
+                key: stationName
+          - name: station_cd
+            valueFrom:
+              configMapKeyRef:
+                name: app
+                key: stationCode
+EOF
+
+```
+![image](https://user-images.githubusercontent.com/80744275/121310006-d8a7dd80-c93d-11eb-996b-389712362cea.png)
+
+```
+Transactions:		        3078 hits
+Availability:		       100 %
+Elapsed time:		       120 secs
+Data transferred:	        0.34 MB
+Response time:		        5.60 secs
+Transaction rate:	       17.15 trans/sec
+Throughput:		        0.01 MB/sec
+Concurrency:		       96.02
+
+```
+
 
 # 신규 개발 조직의 추가
 
