@@ -852,7 +852,7 @@ siege -c100 -t60S -r10 --content-type "application/json" 'http://a3b48fcf762da43
 kubectl get deploy pay -w
 ```
 
-![image](https://user-images.githubusercontent.com/80744275/121330542-12ceaa80-c951-11eb-9940-745dbe3d3427.png)
+![image](https://user-images.githubusercontent.com/80744275/121371749-c008e900-c978-11eb-8cfc-d93089f1bb5b.png)
 
 
 - 어느정도 시간이 흐른 후 스케일 아웃이 벌어지는 것을 확인할 수 있다:
