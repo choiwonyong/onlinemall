@@ -819,7 +819,7 @@ EOF
 - 60초 동안 실시
 
 ```
-siege -c100 -t30S -r10 --content-type "application/json" 'localhost:8081/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
+siege -c100 -t60S -r10 --content-type "application/json" 'http://a3b48fcf762da4370bb8d90e343ab474-1079592167.eu-central-1.elb.amazonaws.com:8080/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
 ```
 ![image](https://user-images.githubusercontent.com/80744275/121329511-3f35f700-c950-11eb-8858-a44791076961.png)
 
@@ -830,7 +830,7 @@ kubectl delete dr --all;
 ```
 - 서킷 브레이커 DestinationRule 삭제 후 확인
 ```
-siege -c100 -t30S -r10 --content-type "application/json" 'localhost:8081/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
+siege -c100 -t60S -r10 --content-type "application/json" 'http://a3b48fcf762da4370bb8d90e343ab474-1079592167.eu-central-1.elb.amazonaws.com:8080/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
 ```
 ![image](https://user-images.githubusercontent.com/80744275/121329877-8cb26400-c950-11eb-9400-42c564c75a88.png)
 
