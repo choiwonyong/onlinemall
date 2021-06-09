@@ -854,28 +854,9 @@ kubectl get deploy pay -w
 
 ![image](https://user-images.githubusercontent.com/80744275/121371749-c008e900-c978-11eb-8cfc-d93089f1bb5b.png)
 
+- siege 의 로그가 100%여서 원하는 결과를 얻지 못함.  
 
-- 어느정도 시간이 흐른 후 스케일 아웃이 벌어지는 것을 확인할 수 있다:
-
-
-```
-NAME    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-pay     1         1         1            1           17s
-pay     1         2         1            1           45s
-pay     1         4         1            1           1m
-:
-```
-- siege 의 로그를 보아도 전체적인 성공률이 높아진 것을 확인 할 수 있다. 
-```
-Transactions:		        5078 hits
-Availability:		       92.45 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
-```
+![image](https://user-images.githubusercontent.com/80744275/121372350-2ee64200-c979-11eb-82f1-6d2accc94120.png)
 
 
 ## 무정지 재배포
