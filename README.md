@@ -702,9 +702,62 @@ kubectl expose deploy gateway --type=LoadBalancer --port=8080
 - 운영플랫폼: AWS의 EKS(Elastic Kubernetes Service)
 - Docker Image 저장소: AWS의 ECR(Elastic Container Registry)
 
+AWS설정
+```
+# 클러스터 생성 EKS
+eksctl create cluster --name user20-eks --version 1.17 --nodegroup-name standard-workers --node-type t3.medium --nodes 4 --nodes-min 1 --nodes-max 4
+
+# 클러스터 토큰 가져오기
+aws eks --region eu-central-1 update-kubeconfig --name user20-eks
+
+# 확인
+kubectl config current-context
+
+# ECR 로그인
+docker login --username AWS -p $(aws ecr get-login-password --region eu-central-1) 879772956301.dkr.ecr.eu-central-1.amazonaws.com/
+```
+
+
 배포명령어(AWS)
 
 ```
+# app
+mvn package -Dmaven.test.skip=true
+docker build -t 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-app:v1 .
+aws ecr create-repository --repository-name user20-app --region eu-central-1
+docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-app:v1
+kubectl create deploy app --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-app:v1
+kubectl expose deploy app --type=ClusterIP --port=8080
+
+# pay
+mvn package -Dmaven.test.skip=true
+docker build -t 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-pay:v1 .
+aws ecr create-repository --repository-name user20-pay --region eu-central-1
+docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-pay:v1
+kubectl create deploy pay --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-pay:v1
+kubectl expose deploy pay --type=ClusterIP --port=8080
+
+# product
+mvn package -Dmaven.test.skip=true
+docker build -t 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-product:v1 .
+aws ecr create-repository --repository-name user20-product --region eu-central-1
+docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-product:v1
+kubectl create deploy product --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-product:v1
+kubectl expose deploy product --type=ClusterIP --port=8080
+
+# delivery
+mvn package -Dmaven.test.skip=true
+docker build -t 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-delivery:v1 .
+aws ecr create-repository --repository-name user20-delivery --region eu-central-1
+docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-delivery:v1
+kubectl create deploy delivery --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-delivery:v1
+kubectl expose deploy delivery --type=ClusterIP --port=8080
+-gateway
+mvn package -Dmaven.test.skip=true
+docker build -t 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-gateway:v1 .
+aws ecr create-repository --repository-name user20-gateway --region eu-central-1
+docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-gateway:v1
+kubectl create deploy gateway --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-gateway:v1
 kubectl expose deploy gateway --type=LoadBalancer --port=8080
 ```
 
