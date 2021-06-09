@@ -672,6 +672,15 @@ http GET localhost:8081/myPages
 
 ![image](https://user-images.githubusercontent.com/80744275/121125744-07e91c80-c862-11eb-90ec-a0fbc441d4af.png)
 
+## API Gateway
+API Gateway를 통하여 마이크로 서비스들 진입점을 하나로 한다.
+- gateway의 application.yml에 라이팅 결로 설정
+
+![image](https://user-images.githubusercontent.com/80744275/121280997-29a1dc80-c912-11eb-98df-2209827f79b0.png)
+
+- EKS에 배포시 MSA는 서비스 타입을 ClusterIP(default)로 설정하여 클러스터 내부에서만 호출 가능하도록 설정
+- API Gateway는 서비스 타입을 LoadBalancer로 설정하여 외부 호출에 대한 라우팅 설정
+
 # 운영
 
 ## CI/CD 설정
