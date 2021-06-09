@@ -761,6 +761,8 @@ docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-gateway:v1
 kubectl create deploy gateway --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-gateway:v1
 kubectl expose deploy gateway --type=LoadBalancer --port=8080
 ```
+ 정상 구동 
+![image](https://user-images.githubusercontent.com/80744275/121297665-a3938f00-c92d-11eb-875f-55192e182dc1.png)
 
 각 구현체들은 각자의 source repository 에 구성되었고, 사용한 CI/CD 플랫폼은 GCP를 사용하였으며, pipeline build script 는 각 프로젝트 폴더 이하에 cloudbuild.yml 에 포함되었다.
 
