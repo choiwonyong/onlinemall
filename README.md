@@ -982,6 +982,63 @@ EOF
 ```
 ![image](https://user-images.githubusercontent.com/80744275/121310006-d8a7dd80-c93d-11eb-996b-389712362cea.png)
 
+## ConfigMap
+- product에서 사용할 productId를 넣는다. 
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product
+data:
+  productId: "100000"
+EOF
+```
+- deployment.yml 내용 적용
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product
+  labels:
+    app: product
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+        - name: product
+          image: username/product:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: product_id
+            valueFrom:
+              configMapKeyRef:
+                name: product
+                key: productId
+```
+- 테스트할 소스 구현
+```
+@RequestMapping(value = "/products/productcode", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String product() {
+    System.out.println("*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*");
+	return System.getenv().get("product_id");
+    }
+```
+
+![image](https://user-images.githubusercontent.com/80744275/121439096-32e98280-c9c0-11eb-9f99-029267fa9440.png)
+
+![image](https://user-images.githubusercontent.com/80744275/121439130-498fd980-c9c0-11eb-953c-d36c3eaad362.png)
+
+
 
 # 신규 개발 조직의 추가
 
