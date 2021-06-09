@@ -1001,18 +1001,6 @@ EOF
 ```
 ![image](https://user-images.githubusercontent.com/80744275/121310006-d8a7dd80-c93d-11eb-996b-389712362cea.png)
 
-```
-Transactions:		        3078 hits
-Availability:		       100 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
-
-```
-
 
 # 신규 개발 조직의 추가
 
