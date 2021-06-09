@@ -859,66 +859,50 @@ kubectl get deploy pay -w
 ![image](https://user-images.githubusercontent.com/80744275/121372350-2ee64200-c979-11eb-82f1-6d2accc94120.png)
 
 
-## 무정지 재배포
+## Readness
 
-* 먼저 무정지 재배포가 100% 되는 것인지 확인하기 위해서 Autoscaler 이나 CB 설정을 제거함
-
-- seige 로 배포작업 직전에 워크로드를 모니터링 함.
+아래의 값으로 Reaness를 설정한다. 
+재기동 제어값 : /tmp/healthy 파일의 존재를 확인
+기동 대기 시간: 5초
 ```
-siege -c100 -t120S -r10 --content-type "application/json" 'http://localhost:8081/orders POST {"item": "chicken"}'
-
-** SIEGE 4.0.5
-** Preparing 100 concurrent users for battle.
-The server is now under siege...
-
-HTTP/1.1 201     0.68 secs:     207 bytes ==> POST http://localhost:8081/orders
-HTTP/1.1 201     0.68 secs:     207 bytes ==> POST http://localhost:8081/orders
-HTTP/1.1 201     0.70 secs:     207 bytes ==> POST http://localhost:8081/orders
-HTTP/1.1 201     0.70 secs:     207 bytes ==> POST http://localhost:8081/orders
-:
-
-```
-
-- 새버전으로의 배포 시작
-```
-kubectl set image ...
-```
-
-- seige 의 화면으로 넘어가서 Availability 가 100% 미만으로 떨어졌는지 확인
-```
-Transactions:		        3078 hits
-Availability:		       70.45 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
-
-```
-배포기간중 Availability 가 평소 100%에서 70% 대로 떨어지는 것을 확인. 원인은 쿠버네티스가 성급하게 새로 올려진 서비스를 READY 상태로 인식하여 서비스 유입을 진행한 것이기 때문. 이를 막기위해 Readiness Probe 를 설정함:
-
-```
-# deployment.yaml 의 readiness probe 의 설정:
-
-
-kubectl apply -f kubernetes/deployment.yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app
+          image: a10d357302c0a4f5db361dcb17e41894-1516904085.eu-central-1.elb.amazonaws.com/app:v1
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/heatlty
+            initialDelaySeconds: 5
+            periodSeconds: 5
+EOF
 ```
 
-- 동일한 시나리오로 재배포 한 후 Availability 확인:
 ```
-Transactions:		        3078 hits
-Availability:		       100 %
-Elapsed time:		       120 secs
-Data transferred:	        0.34 MB
-Response time:		        5.60 secs
-Transaction rate:	       17.15 trans/sec
-Throughput:		        0.01 MB/sec
-Concurrency:		       96.02
-
+kubectl get pods -w
 ```
+![image](https://user-images.githubusercontent.com/80744275/121443491-8c55af80-c9c8-11eb-841e-2a2d2b28824f.png)
 
-배포기간 동안 Availability 가 변화없기 때문에 무정지 재배포가 성공한 것으로 확인됨.
+![image](https://user-images.githubusercontent.com/80744275/121443563-ae4f3200-c9c8-11eb-9d0e-e44cf9178fa9.png)
 
 ## Liveness
 pod의 container가 정상적으로 기동되는지 확인하여, 비정상 상태인 경우 pod를 재기동하도록 한다.
