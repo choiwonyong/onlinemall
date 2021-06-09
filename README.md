@@ -752,7 +752,8 @@ aws ecr create-repository --repository-name user20-delivery --region eu-central-
 docker push 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-delivery:v1
 kubectl create deploy delivery --image=879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-delivery:v1
 kubectl expose deploy delivery --type=ClusterIP --port=8080
--gateway
+
+# gateway
 mvn package -Dmaven.test.skip=true
 docker build -t 879772956301.dkr.ecr.eu-central-1.amazonaws.com/user20-gateway:v1 .
 aws ecr create-repository --repository-name user20-gateway --region eu-central-1
