@@ -679,7 +679,20 @@ API Gateway를 통하여 마이크로 서비스들 진입점을 하나로 한다
 ![image](https://user-images.githubusercontent.com/80744275/121280997-29a1dc80-c912-11eb-98df-2209827f79b0.png)
 
 - EKS에 배포시 MSA는 서비스 타입을 ClusterIP(default)로 설정하여 클러스터 내부에서만 호출 가능하도록 설정
+
+```
+kubectl expose deploy order --type=ClusterIP --port=8080
+kubectl expose deploy pay --type=ClusterIP --port=8080
+kubectl expose deploy product --type=ClusterIP --port=8080
+kubectl expose deploy delivery --type=ClusterIP --port=8080
+
+```
+
 - API Gateway는 서비스 타입을 LoadBalancer로 설정하여 외부 호출에 대한 라우팅 설정
+
+```
+kubectl expose deploy gateway --type=LoadBalancer --port=8080
+```
 
 # 운영
 
