@@ -832,7 +832,7 @@ EOF
 ```
 siege -c100 -t60S -r10 --content-type "application/json" 'http://a3b48fcf762da4370bb8d90e343ab474-1079592167.eu-central-1.elb.amazonaws.com:8080/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
 ```
-![image](https://user-images.githubusercontent.com/80744275/121329511-3f35f700-c950-11eb-8858-a44791076961.png)
+![image](https://user-images.githubusercontent.com/80744275/121447125-00478600-c9d0-11eb-8506-c32319836b3e.png)
 
 -서킷 브레이커 DestinationRule 삭제
 
