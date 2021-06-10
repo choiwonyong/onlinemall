@@ -357,8 +357,9 @@ public class Delivery {
     private String status;
     private String customerId;
     private String address;
+```
 
-
+```
 # DeliveryRepository.java
 
 package onlinemall;
@@ -369,7 +370,9 @@ package onlinemall;
     public interface DeliveryRepository extends MongoRepository<Delivery, Long>{
 
 }
+```
 
+```
 # application.yml
 
   spring:
@@ -377,13 +380,17 @@ package onlinemall;
   data:
     mongodb:
       uri: mongodb://localhost:27017/tutorial
+```
 
+```
 # pom.xml
     <dependency>
         <groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-mongodb</artifactId>
     </dependency>
+```
 
+```
 # Delivery_table 생성 확인
 
 http POST http://localhost:8084/deliveries orderId=1 status=DeliveryStarted customerId=CHOI address=Seoul
