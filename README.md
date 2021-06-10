@@ -832,7 +832,7 @@ EOF
 ```
 siege -c100 -t60S -r10 --content-type "application/json" 'http://a3b48fcf762da4370bb8d90e343ab474-1079592167.eu-central-1.elb.amazonaws.com:8080/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
 ```
-![image](https://user-images.githubusercontent.com/80744275/121447125-00478600-c9d0-11eb-8506-c32319836b3e.png)
+![image](https://user-images.githubusercontent.com/80744275/121447244-3f75d700-c9d0-11eb-8aa0-8917dbfd465d.png)
 
 -서킷 브레이커 DestinationRule 삭제
 
@@ -843,7 +843,8 @@ kubectl delete dr --all;
 ```
 siege -c100 -t60S -r10 --content-type "application/json" 'http://a3b48fcf762da4370bb8d90e343ab474-1079592167.eu-central-1.elb.amazonaws.com:8080/orders POST {"productId": "1000", "productName":"TV", "qty":"1", "status":"ordered", "unitPrice":"1000000", "adderss":"Seoul", "customerId":"CHOI"}'
 ```
-![image](https://user-images.githubusercontent.com/80744275/121329877-8cb26400-c950-11eb-9400-42c564c75a88.png)
+![image](https://user-images.githubusercontent.com/80744275/121447217-3127bb00-c9d0-11eb-9500-0595bd70a980.png)
+
 
 
 ### 오토스케일 아웃
